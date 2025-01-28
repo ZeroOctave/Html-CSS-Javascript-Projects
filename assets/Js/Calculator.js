@@ -177,32 +177,29 @@ numberButtons.forEach(button => {
   })
 })
 
+const operationMap = {
+  "pie-button": 1,
+  "e-button": 2,
+  "square": 3,
+  "pow": 4,
+  "squareRoot": 5,
+  "logBase10": 6
+};
+
 operationButtons.forEach(button => {
   button.addEventListener('click', () => {
     if (button.classList.contains("special")) {
-      if (button.classList.contains("pie-button")) {
-        calculator.specialOperation(1)
+      const specialOperationKey = Object.keys(operationMap).find(key => button.classList.contains(key));
+      if (specialOperationKey) {
+        calculator.specialOperation(operationMap[specialOperationKey]);
       }
-      else if (button.classList.contains("e-button")) {
-        calculator.specialOperation(2)
-      }
-      else if (button.classList.contains("square")) {
-        calculator.specialOperation(3)
-      }
-      else if (button.classList.contains("pow")) {
-        calculator.specialOperation(4)
-      }
-      else if (button.classList.contains("squareRoot")) {
-        calculator.specialOperation(5)
-      }
-      else if (button.classList.contains("logBase10")) {
-        calculator.specialOperation(6)
-      }
+    } else {
+      calculator.chooseOperation(button.innerText);
     }
-    else calculator.chooseOperation(button.innerText)
-    calculator.updateDisplay()
-  })
-})
+    calculator.updateDisplay();
+  });
+});
+
 
 equalsButton.addEventListener('click', button => {
   calculator.compute()
